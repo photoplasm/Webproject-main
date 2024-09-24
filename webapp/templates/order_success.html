@@ -1,0 +1,9 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="container mx-auto">
+    <h1 class="text-2xl font-bold mb-4">Order Placed Successfully!</h1>
+    <p>Thank you for your order. We will process it shortly.</p>
+    <a href="{% url 'cart_view' %}" class="bg-blue-500 text-white px-4 py-2 rounded">Go back to Cart</a>
+</div>
+{% endblock %}

@@ -1,0 +1,90 @@
+{% load compress %}
+{% load static %}
+<!DOCTYPE html>
+<html lang="th">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>อาหารพื้นเมือง</title>
+    <script src="{% static 'js/scripts.js' %}"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Asana+New:wght@400;500&family=Charm:wght@400;500&family=Mitr:wght@300;400;500;600;700&family=Prompt:wght@300;400;500;600;700&family=Sarabun:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+    {% compress css %}
+    <link rel="stylesheet" href="{% static 'src/output.css' %}">
+    {% endcompress %}
+</head>
+
+<body class="bg-gray-100 text-gray-900">
+
+    <!-- Navbar -->
+    <nav class="bg-white shadow-md">
+        <div class="max-w-7xl mx-auto px-4 py-4 flex items-center justify-between">
+            <div class="flex items-center">
+                <a class="text-2xl font-semibold text-gray-800 hover:text-gray-600 transition-colors" href="/">Fashion Boutique</a>
+
+                <!-- Toggle Button -->
+                <button class="lg:hidden ml-4 p-2 text-gray-600 hover:text-gray-800" id="navbar-toggle" aria-label="Toggle navigation">
+                    <i class="fas fa-bars"></i>
+                </button>
+            </div>
+
+            <!-- Search Form -->
+            <form method="GET" action="{% url 'search' %}" class="hidden lg:flex items-center space-x-2">
+                <input type="text" name="q" placeholder="Search products..." class="w-full p-2 border border-gray-300 rounded-lg">
+                <button type="submit" class="bg-blue-500 text-white px-4 py-2 rounded-lg">Search</button>
+            </form>
+
+            <!-- Navbar Menu -->
+            <div class="hidden lg:flex space-x-6" id="navbar-menu">
+                {% if user.is_authenticated %}
+                <a class="flex items-center space-x-2 bg-gradient-to-r from-blue-500 to-teal-500 text-white rounded-full py-2 px-4 hover:from-blue-600 hover:to-teal-600 transition-colors shadow-lg" href="#">
+                    <i class="fas fa-box"></i>
+                    <span>Products</span>
+                </a>
+                <a class="flex items-center space-x-2 bg-gradient-to-r from-green-500 to-blue-500 text-white rounded-full py-2 px-4 hover:from-green-600 hover:to-blue-600 transition-colors shadow-lg" href="/cart/">
+                    <i class="fas fa-shopping-cart"></i>
+                    <span>ตะกร้าสั่งซื้อ</span>
+                </a>
+
+                <!-- Admin Options -->
+
+
+                <a class="bg-gradient-to-r from-red-500 to-yellow-500 text-white rounded-full py-2 px-4 hover:from-red-600 hover:to-yellow-600 transition-colors shadow-lg" href="/logout/">Logout</a>
+                {% else %}
+                <a class="bg-gradient-to-r from-blue-400 to-blue-600 text-white rounded-full py-2 px-4 hover:from-blue-500 hover:to-blue-700 transition-colors shadow-lg" href="/login/">Log in</a>
+                <a class="bg-gradient-to-r from-teal-400 to-teal-600 text-white rounded-full py-2 px-4 hover:from-teal-500 hover:to-teal-700 transition-colors shadow-lg" href="/signup/">Sign up</a>
+                {% endif %}
+            </div>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <div class="container mx-auto px-4 py-6">
+        {% block content %}
+        {% endblock %}
+    </div>
+
+    <!-- Toggle Menu Script -->
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const navbarToggle = document.getElementById('navbar-toggle');
+            const navbarMenu = document.getElementById('navbar-menu');
+
+            if (navbarToggle) {
+                navbarToggle.addEventListener('click', () => {
+                    if (navbarMenu.classList.contains('hidden')) {
+                        navbarMenu.classList.remove('hidden');
+                        navbarMenu.classList.add('flex');
+                    } else {
+                        navbarMenu.classList.remove('flex');
+                        navbarMenu.classList.add('hidden');
+                    }
+                });
+            }
+        });
+    </script>
+
+</body>
+
+</html>
